@@ -51,7 +51,7 @@ if algorithm == "Steepest Descent (Optimal Step)" or algorithm == "Compare All T
     results["SD (Optimal)"] = steepest_descent_optimal(obj_fn, x0, max_iter, tol)
 
 # Create tabs for different views
-tab_visual, tab_analysis, tab_adv = st.tabs(["Visualization", "Comparative Analysis", "Advanced Details"])
+tab_visual, tab_analysis = st.tabs(["Visualization", "Comparative Analysis"])
 
 with tab_visual:
     st.header(f"Visualizing $f(x, y) = {expr_str}$")
@@ -176,18 +176,3 @@ with tab_analysis:
             "Gradient Norm": [np.linalg.norm(obj_fn.grad(p)) for p in path]
         })
         st.dataframe(df_iters)
-
-with tab_adv:
-    st.header("Advanced Analysis")
-    st.markdown("""
-    ### 1. Higher-Degree Functions
-    This app includes a **Degree 4 (Quartic)** function with multiple local minima. Finding the optimal step size on higher-degree polynomials can sometimes involve multiple roots along the line search direction.
-
-    ### 2. Starting Point Sensitivity 
-    Test the **Himmelblau** or **Quartic** function with different initial coordinate points ($x_0$).
-    You will observe that these algorithms converge to completely different local minima depending on which "basin of attraction" the initial point lies in. 
-
-    ### 3. Parameter Impact: Initial Point vs. Learning Rate
-    - The final convergent location is **heavily influenced by the starting point**. Gradient descent generally cannot escape a local minimum once inside its basin.
-    - Conversely, an improperly sized **fixed $\\alpha$** can cause the algorithm to overshoot its basin and land in another basin's territory, making the result chaotic and effectively jumping the valleys.
-    """)
